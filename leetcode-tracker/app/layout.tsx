@@ -9,9 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="winter">
-      <body className="bg-red-50">
+      <body className="flex flex-col min-h-screen">
         <NavBar/>
-        <main className="mx-10">
+        <main className="flex flex-grow justify-center mx-10">
           {children}
         </main>
         <Footer/>
