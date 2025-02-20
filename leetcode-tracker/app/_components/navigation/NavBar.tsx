@@ -1,14 +1,14 @@
-
+import Link from "next/link"
 
 function NavBar() {
   return (
-    <nav className="navbar bg-base-100">
+    <nav className="navbar bg-primary">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <Link href='/' className="btn btn-ghost text-xl">LeetCode Tracker</Link>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
-          <li><a>Link</a></li>
+          <li><Link href='/problems'>Grind 169 Problems</Link></li>
           <li>
             <details>
               <summary>Parent</summary>
