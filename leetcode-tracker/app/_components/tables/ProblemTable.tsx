@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import * as motion from "motion/react-client"
+import { AnimatePresence, motion } from "framer-motion";
 import { ProblemType } from "@/app/_types/commonTypes";
 import ProblemDetails from "./ProblemRow";
 import SortableTableHeader from "./SortableTableHeader";
 
 type TablePropType = {
   problems: ProblemType[];
+  displayCompleted: boolean;
 }
 
-function ProblemTable({ problems }: TablePropType) {
+function ProblemTable({ problems, displayCompleted }: TablePropType) {
   
   const [sortedProblems, setSortedProblems] = (
     useState<ProblemType[]>([...problems])
@@ -33,15 +34,22 @@ function ProblemTable({ problems }: TablePropType) {
   }
 
   useEffect(() => {
-    setSortedProblems([...problems].sort(sortByProp()))
-  }, [sortProp, sortArray])
+    if (!displayCompleted) {
+      setSortedProblems(
+        [...problems].filter((problem) => problem.goalTime < problem.bestTime)
+      );
+    } else {
+      setSortedProblems([...problems]);
+    }
+    setSortedProblems(prev =>[...prev].sort(sortByProp()))
+  }, [sortProp, sortArray, displayCompleted])
 
   return (
     <div className="my-2">
-      <table className="table table-xs table-pin-rows">
+      <table className="table table-xs table-pin-rows table-fixed w-full">
         <thead>
           <tr>
-            <th>
+            <th className="w-1/2">
               Problem
             </th>
             <SortableTableHeader<ProblemType>
@@ -63,20 +71,26 @@ function ProblemTable({ problems }: TablePropType) {
           </tr>
         </thead>
         <tbody>
-          {sortedProblems.map(
-            (problem) => (
-              <motion.tr
-                className=""
-                key={problem.title}
-                layout
-                transition={
-                  { type: "tween", duration: 0.3, ease: "easeInOut" }
-                }
-              >
-                <ProblemDetails problem={problem}/>
-              </motion.tr>
-            )
-          )}
+          <AnimatePresence>
+            {sortedProblems.map(
+              (problem) => (
+                <motion.tr
+                  className=""
+                  key={problem.title}
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{    
+                    type: "tween", duration: 0.2, ease: "easeInOut"
+                  }}
+                >
+                  <ProblemDetails problem={problem}/>
+                </motion.tr>
+              )
+            )}
+          </AnimatePresence>
+          
         </tbody>
       </table>
     </div>

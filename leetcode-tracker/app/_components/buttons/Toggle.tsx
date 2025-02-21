@@ -1,22 +1,21 @@
 'use client'
-import { useState } from "react";
 
-function Toggle() {
+type TogglePropTypes = {
+  text: string;
+  isChecked: boolean;
+  toggleAction: () => void;
+}
 
-  const [isChecked, setIsChecked] = useState(true);
-  
-  const handleChange = () => {
-    setIsChecked(!isChecked);
-  }
+function Toggle({ text, isChecked, toggleAction }: TogglePropTypes) {
 
   return (
     <div className="form-control">
       <label className="label cursor-pointer">
-        <span className="label-text mr-1">Display Completed</span>
+        <span className="label-text text-xs mr-1">{text}</span>
         <input
           type="checkbox"
-          className="toggle toggle-primary"
-          onClick={handleChange}
+          className="toggle toggle-xs toggle-primary"
+          onChange={toggleAction}
           checked={isChecked}
         />
       </label>

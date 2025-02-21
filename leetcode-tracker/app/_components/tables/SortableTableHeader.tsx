@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import * as utils from '@/app/_utils/utils'
 
 type SortButtonPropTypes<T> ={
+  className?: string;
   defaultProp: keyof T;
   propName: keyof T;
   sortProp: keyof T;
@@ -15,7 +16,8 @@ type SortButtonPropTypes<T> ={
 
 function SortableTableHeader<T>(
   {
-    defaultProp, propName, sortProp, setSortProp, sortArray, setSortArray
+    className='', defaultProp, propName, sortProp, 
+    setSortProp, sortArray, setSortArray
   }: SortButtonPropTypes<T>
 ) {
 
@@ -55,7 +57,7 @@ function SortableTableHeader<T>(
   }, [sortProp])
 
   return (
-    <th className="cursor-pointer" onClick={toggle}>
+    <th className={`cursor-pointer ${className}`} onClick={toggle}>
       <div className="flex flex-row gap-1">
       {utils.capitalize(propName as string)}
         <div
