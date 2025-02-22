@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ProblemType, difficulties} from "@/app/_types/types";
 import ProblemDetails from "./ProblemRow";
-import SortableTableHeader from "../SortableTableHeader";
+import SortableTableHeaders from "./base/SortableTableHeaders";
+import { sortByProp } from "@/app/_utils/utils";
+
 
 type TablePropType = {
   problems: ProblemType[];
@@ -16,22 +18,13 @@ function ProblemTable({ problems, displayCompleted }: TablePropType) {
   );
   const [sortProp, setSortProp] = useState<keyof ProblemType>('id');
   const [sortArray, setSortArray] = useState<string[]>([]);
-
-  const topics = problems.map((problem) => (problem.topic))
+  const headers: {propName: keyof ProblemType; sortArray: string[]}[] = [
+    {propName: 'difficulty', sortArray: difficulties},
+    {propName: 'topic', sortArray: [...new Set(problems.map((p)=>(p.topic)))]},
+    {propName: 'goalTime', sortArray: []},
+    {propName: 'bestTime', sortArray: []}
+  ]
   
-  const sortByProp = () => {
-    return (a: ProblemType, b: ProblemType) => {
-      if (sortArray.length) {
-        const orderDiff = (
-          sortArray.indexOf(a[sortProp] as string)
-          - sortArray.indexOf(b[sortProp] as string)
-        )
-        return orderDiff !== 0 ? orderDiff : a.id - b.id
-      }
-      return (a[sortProp] as number) - (b[sortProp] as number)
-    }
-  }
-
   useEffect(() => {
     if (!displayCompleted) {
       setSortedProblems(
@@ -40,7 +33,9 @@ function ProblemTable({ problems, displayCompleted }: TablePropType) {
     } else {
       setSortedProblems([...problems]);
     }
-    setSortedProblems(prev =>[...prev].sort(sortByProp()))
+    setSortedProblems(prev =>[...prev].sort(
+      sortByProp(sortArray, sortProp, 'id')
+    ));
   }, [sortProp, sortArray, displayCompleted])
 
   return (
@@ -48,23 +43,14 @@ function ProblemTable({ problems, displayCompleted }: TablePropType) {
       <table className="table table-xs table-pin-rows table-fixed w-full">
         <thead>
           <tr>
-            <th className="w-1/2">
+            <th className="w-2/5">
               Problem
             </th>
-            <SortableTableHeader<ProblemType>
+            <SortableTableHeaders<ProblemType>
               defaultProp='id'
-              propName="difficulty"
+              headers={headers}
               sortProp={sortProp}
               setSortProp={setSortProp}
-              sortArray={difficulties}
-              setSortArray={setSortArray}
-            />
-            <SortableTableHeader<ProblemType>
-              defaultProp='id'
-              propName="topic"
-              sortProp={sortProp}
-              setSortProp={setSortProp}
-              sortArray={topics}
               setSortArray={setSortArray}
             />
           </tr>
