@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ProblemType } from "@/app/_types/commonTypes";
+import { ProblemType, difficulties} from "@/app/_types/types";
 import ProblemDetails from "./ProblemRow";
-import SortableTableHeader from "./SortableTableHeader";
+import SortableTableHeader from "../SortableTableHeader";
 
 type TablePropType = {
   problems: ProblemType[];
@@ -17,8 +17,7 @@ function ProblemTable({ problems, displayCompleted }: TablePropType) {
   const [sortProp, setSortProp] = useState<keyof ProblemType>('id');
   const [sortArray, setSortArray] = useState<string[]>([]);
 
-  const topics = ['Array', 'Tree', 'Linked List', 'Backtracking', 'Math', 'Dynamic Programming', 'String']
-  const difficulties = ['Easy', 'Medium', 'Hard']
+  const topics = problems.map((problem) => (problem.topic))
   
   const sortByProp = () => {
     return (a: ProblemType, b: ProblemType) => {
