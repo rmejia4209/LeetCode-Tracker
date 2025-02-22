@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model problems {
+  id         Int            @id @default(autoincrement())
+  title      String         @db.VarChar(64)
+  link       String         @db.VarChar(128)
+  difficulty difficulty_val
+  topic_id   Int
+  goal_time  Int
+  is_premium Boolean
+  topics     topics         @relation(fields: [topic_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@map("grind_169_problems")
+}
+
+model topics {
+  id                 Int                  @id @default(autoincrement())
+  topic              String               @unique @db.VarChar(32)
+  grind_169_problems problems[]
+}
+
+model user_attempts {
+  id           Int @id @default(autoincrement())
+  attempt_time Int
+}
+
+enum difficulty_val {
+  easy
+  medium
+  hard
+}
