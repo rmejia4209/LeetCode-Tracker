@@ -1,4 +1,5 @@
-import { ProblemType } from "@/app/_types/commonTypes";
+import { ProblemType } from "@/app/_types/types";
+import { capitalize } from "@/app/_utils/utils";
 
 type TableRowPropType = {
   problem: ProblemType
@@ -32,7 +33,7 @@ function ProblemDetails({ problem }: TableRowPropType) {
       </td>
       <td>
         <span className={`badge badge-sm ${getColor()}`}>  
-          {problem.difficulty}
+          {capitalize(problem.difficulty)}
         </span>
       </td>
       <td>
