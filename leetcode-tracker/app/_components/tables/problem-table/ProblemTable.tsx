@@ -28,7 +28,9 @@ function ProblemTable({ problems, displayCompleted }: TablePropType) {
   useEffect(() => {
     if (!displayCompleted) {
       setSortedProblems(
-        [...problems].filter((problem) => problem.goalTime < problem.bestTime)
+        [...problems].filter((problem) =>
+          problem.bestTime < 0 || problem.goalTime < problem.bestTime
+        )
       );
     } else {
       setSortedProblems([...problems]);
