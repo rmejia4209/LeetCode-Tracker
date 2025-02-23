@@ -4,7 +4,9 @@ import ProblemTableWithActions from "../_components/tables/problem-table/Problem
 async function Page() {
 
 
-  const res = await fetch("http://localhost:3000/api/problems", { method: "GET" });
+  const res = await fetch(
+    "http://localhost:3000/api/problems", {method: "GET"}
+  );
   const problems: ProblemType[] = await res.json();
   
 
