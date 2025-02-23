@@ -4,7 +4,7 @@ import { ProblemType } from "@/app/_types/types";
 import ProblemTable from "./ProblemTable";
 import Toggle from "../../buttons/Toggle";
 
-function Foo( {problems} : {problems: ProblemType[]} ) {
+function ProblemTableWithActions( {problems} : {problems: ProblemType[]} ) {
 
   const [displayCompleted, setDisplayCompleted] = useState(true);
 
@@ -23,5 +23,5 @@ function Foo( {problems} : {problems: ProblemType[]} ) {
   );
 }
 
-export default Foo;
+export default ProblemTableWithActions;
 
