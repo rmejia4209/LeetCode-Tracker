@@ -8,7 +8,6 @@ export type ProblemType = {
     topic: string;
     goalTime: number;
     bestTime: number;
-    isPremium: boolean;
   }
 
 

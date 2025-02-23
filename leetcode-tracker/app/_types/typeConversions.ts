@@ -12,9 +12,8 @@ export function DatabaseProblemToProblem(problems: DatabaseProblemType[]) {
       link: problem.link,
       difficulty: problem.difficulty,
       topic: problem.topics.topic,
-      bestTime: -1,  //TODO - fix
-      goalTime: problem.goal_time,
-      isPremium: problem.is_premium
+      bestTime: Infinity,
+      goalTime: problem.goal_time
     }
   ))
   return convertedData;
