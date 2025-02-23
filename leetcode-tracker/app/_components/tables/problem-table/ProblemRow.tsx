@@ -1,7 +1,5 @@
 import { ProblemType } from "@/app/_types/types";
 import { capitalize } from "@/app/_utils/utils";
-import LockIcon from "@/app/_components/icons/Lock"
-
 
 type TableRowPropType = {
   problem: ProblemType
@@ -26,15 +24,12 @@ function ProblemDetails({ problem }: TableRowPropType) {
   return (
     <>
       <td>
-        <div className="flex flex-row">
-          <a
+        <a
           className="text-md text-primary font-bold hover:underline"
           href={problem.link}
-          >
-            {problem.title}
-          </a>
-          {problem.isPremium && <LockIcon/>}
-        </div>
+        >
+          {problem.title}
+        </a>
       </td>
       <td>
         <span className={`badge badge-sm ${getColor()}`}>  
@@ -44,14 +39,8 @@ function ProblemDetails({ problem }: TableRowPropType) {
       <td>
         <span className="badge badge-sm badge-ghost">
           {problem.topic}
-        </span>
-      </td>
-      <td>
-        {`${problem.goalTime / 60} min`}
-      </td>
-      <td>
-        {problem.bestTime > 0 ? `${problem.bestTime} min` : `-`}
-      </td>
+          </span>
+      </td>  
     </>
   )
 }
