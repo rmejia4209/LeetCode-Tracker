@@ -1,5 +1,5 @@
 import { ProblemType } from "@/app/_types/types";
-import Foo from "../_components/tables/problem-table/ProblemTableWithActions";
+import ProblemTableWithActions from "../_components/tables/problem-table/ProblemTableWithActions";
 
 async function Page() {
 
@@ -9,7 +9,7 @@ async function Page() {
   
 
   return (
-    <Foo problems={problems}/>
+    <ProblemTableWithActions problems={problems}/>
   );
 }
 

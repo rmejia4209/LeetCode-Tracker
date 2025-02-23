@@ -1,5 +1,5 @@
 'use client'
-import Chevron from "@/app/_components/icons/Chevron";
+import Chevron from "../icons/Chevron";
 import { useState, useEffect } from "react";
 import * as utils from '@/app/_utils/utils'
 
@@ -70,6 +70,7 @@ function SortableTableHeader<T>(
         <Chevron/>
         </div>
       </div>
+        
     </th>
   )
 }
