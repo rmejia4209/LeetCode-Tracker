@@ -30,6 +30,7 @@ model user_attempts {
   id           Int @id @default(autoincrement())
   problem_id  Int
   attempt_time Int
+  rating  Int
   problems  problems @relation(fields: [problem_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
