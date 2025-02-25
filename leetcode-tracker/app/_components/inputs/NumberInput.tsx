@@ -6,17 +6,18 @@ type NumberInputPropType = {
   className: string;
   name: string;
   placeholder: string;
-  minVal?: number | undefined;
-  maxVal?: number | undefined;
-  nextElementId?: string | undefined;
-  prevElementId?: string | undefined;
+  minVal?: number;
+  maxVal?: number;
+  nextElementId?: string;
+  prevElementId?: string;
   intsOnly?: boolean;
+  onChangeAction?: () => void
 }
 
 function NumberInput(
   { 
     id, className, name, placeholder, minVal, maxVal, nextElementId,
-    prevElementId, intsOnly=false, 
+    prevElementId, onChangeAction, intsOnly=false, 
   }: NumberInputPropType
 ) {
 
@@ -98,6 +99,7 @@ function NumberInput(
       onWheel={preventScroll}
       onKeyDown={filterChars}
       onInput={filterInput}
+      onChange={onChangeAction}
     />
   )
 }
