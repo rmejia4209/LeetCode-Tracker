@@ -11,10 +11,14 @@ export type ProblemType = {
     isPremium: boolean;
   }
 
+// error types
+export type FormErrorType = {
+  message: string;
+}
 
-// -- categories
+// db types
+// categories
 export const difficulties: difficulty_val[] = Object.values(difficulty_val);
 
 
-//---db types
 export type DatabaseProblemType = { topics: { topic: string } } & problems
