@@ -2,17 +2,21 @@
 import { useRef } from "react";
 
 type NumberInputPropType = {
+  id: string;
   className: string;
   name: string;
   placeholder: string;
-  min?: number | undefined;
-  max?: number | undefined;
+  minVal?: number | undefined;
+  maxVal?: number | undefined;
+  nextElementId?: string | undefined;
+  prevElementId?: string | undefined;
   intsOnly?: boolean;
 }
 
 function NumberInput(
   { 
-    className, name, placeholder, min, max, intsOnly=false
+    id, className, name, placeholder, minVal, maxVal, nextElementId,
+    prevElementId, intsOnly=false, 
   }: NumberInputPropType
 ) {
 
@@ -36,6 +40,19 @@ function NumberInput(
   
   const filterChars = (e: React.KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
+      case "ArrowRight":
+      case "Enter":
+        if (nextElementId) {
+          e.preventDefault();
+          document.getElementById(nextElementId)?.focus();
+        }
+        break;
+      case "ArrowLeft":
+        if (prevElementId) {
+          e.preventDefault();
+          document.getElementById(prevElementId)?.focus();
+        }
+        break;
       case '+':
         e.preventDefault();
         break;
@@ -43,7 +60,7 @@ function NumberInput(
         val.current = val.current.slice(0, -1)
         break;
       case '-':
-        if (typeof min === 'number' && min >= 0) e.preventDefault();
+        if (typeof minVal === 'number' && minVal >= 0) e.preventDefault();
         else if (!val.current.length) val.current = "-" 
         else e.preventDefault();
         break;
@@ -58,10 +75,10 @@ function NumberInput(
   const filterInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
       const numVal: number = Number(e.target.value)
-      if (typeof min === 'number' && numVal < min) {
+      if (typeof minVal === 'number' && numVal < minVal) {
         val.current = val.current.slice(0, -1);
         e.target.value = val.current
-      } else if (typeof max === 'number' && numVal > max) {
+      } else if (typeof maxVal === 'number' && numVal > maxVal) {
         val.current = val.current.slice(0, -1);
         e.target.value = val.current;
       }
@@ -71,6 +88,7 @@ function NumberInput(
 
   return(
     <input
+      id={id}
       ref={inputRef}
       className={className}
       name={name}
