@@ -60,7 +60,7 @@ function TimeInput(
         problemId={problemId}
         name="hours"
         placeholder="h"
-        nextElementId="minutes"
+        nextElementId={`minutes_${problemId}`}
         maxVal={23}
         inErrorState={inErrorState}
         resetErrorState={resetErrorState}
@@ -70,8 +70,8 @@ function TimeInput(
         problemId={problemId}
         name="minutes"
         placeholder="m"
-        nextElementId="seconds"
-        prevElementId="hours"
+        nextElementId={`seconds_${problemId}`}
+        prevElementId={`hours_${problemId}`}
         inErrorState={inErrorState}
         resetErrorState={resetErrorState}
       />
@@ -80,7 +80,7 @@ function TimeInput(
         problemId={problemId}
         name="seconds"
         placeholder="s"
-        prevElementId="minutes"
+        prevElementId={`minutes_${problemId}`}
         inErrorState={inErrorState}
         resetErrorState={resetErrorState}
       />
