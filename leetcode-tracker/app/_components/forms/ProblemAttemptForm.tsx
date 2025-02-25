@@ -5,7 +5,7 @@ import AttemptRating from "../inputs/AttemptRating";
 import ErrorAlert from "../feedback/CompactErrorAlert";
 import { postAttempt } from "@/app/_actions/actions";
 
-function ProblemAttemptForm() {
+function ProblemAttemptForm({ problemId }: { problemId: number}) {
   const [error, formAction, isPending] = useActionState(postAttempt, null);
   const [showError, setShowError] = useState(false);
 
@@ -19,9 +19,9 @@ function ProblemAttemptForm() {
       action={formAction}
       className="flex flex-col gap-2"
     >
-      <input type="hidden" name="problemId" value="1"/>
+      <input type="hidden" name="problemId" value={problemId}/>
       <TimeInput
-        problemId={1}
+        problemId={problemId}
         inErrorState={showError}
         resetErrorState={() => {if (showError) setShowError(false);}}
       />
