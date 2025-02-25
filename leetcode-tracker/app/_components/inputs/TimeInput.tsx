@@ -8,18 +8,24 @@ type TimeUnitInputPropTypes = {
   placeholder: string;
   nextElementId?: string | undefined;
   prevElementId?: string | undefined;
+  inErrorState: boolean
+  resetErrorState: () => void
   maxVal?: number;
 }
 
 function TimeUnitInput(
   {
-    problemId, name, placeholder, nextElementId, prevElementId, maxVal=60
+    problemId, name, placeholder, nextElementId, prevElementId, inErrorState,
+    resetErrorState, maxVal=60
   }: TimeUnitInputPropTypes
 ) {
   return (
     <NumberInput
       id={`${name}_${problemId}`}
-      className={`input input-bordered input-primary text-xl w-12`}
+      className={`
+        input input-bordered text-xl w-12
+        ${inErrorState ? "input-error" : "input-primary"}
+      `}
       placeholder={placeholder}
       name={name}
       minVal={0}
@@ -27,12 +33,21 @@ function TimeUnitInput(
       intsOnly={true}
       nextElementId={nextElementId}
       prevElementId={prevElementId}
+      onChangeAction={inErrorState ? resetErrorState: undefined}
     />
   )
 }
 
 
-function TimeInput({ problemId }: { problemId: number }) {
+type TimeInputPropTypes = {
+  problemId: number;
+  inErrorState: boolean
+  resetErrorState: () => void
+}
+
+function TimeInput(
+  { problemId, inErrorState, resetErrorState }: TimeInputPropTypes
+){
 
   return (
 
@@ -47,6 +62,8 @@ function TimeInput({ problemId }: { problemId: number }) {
         placeholder="h"
         nextElementId="minutes"
         maxVal={23}
+        inErrorState={inErrorState}
+        resetErrorState={resetErrorState}
       />
       <span className="text-4xl px-1">:</span>
       <TimeUnitInput
@@ -55,6 +72,8 @@ function TimeInput({ problemId }: { problemId: number }) {
         placeholder="m"
         nextElementId="seconds"
         prevElementId="hours"
+        inErrorState={inErrorState}
+        resetErrorState={resetErrorState}
       />
       <span className="text-4xl px-1">:</span>
       <TimeUnitInput
@@ -62,6 +81,8 @@ function TimeInput({ problemId }: { problemId: number }) {
         name="seconds"
         placeholder="s"
         prevElementId="minutes"
+        inErrorState={inErrorState}
+        resetErrorState={resetErrorState}
       />
     </fieldset>
   )
