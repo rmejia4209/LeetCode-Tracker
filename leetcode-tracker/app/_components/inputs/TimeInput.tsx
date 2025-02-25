@@ -3,6 +3,7 @@ import ClockIcon from "../icons/Clock";
 
 
 type TimeUnitInputPropTypes = {
+  problemId: number;
   name: string;
   placeholder: string;
   nextElementId?: string | undefined;
@@ -12,12 +13,12 @@ type TimeUnitInputPropTypes = {
 
 function TimeUnitInput(
   {
-    name, placeholder, nextElementId, prevElementId, maxVal=60
+    problemId, name, placeholder, nextElementId, prevElementId, maxVal=60
   }: TimeUnitInputPropTypes
 ) {
   return (
     <NumberInput
-      id={name}
+      id={`${name}_${problemId}`}
       className={`input input-bordered input-primary text-xl w-12`}
       placeholder={placeholder}
       name={name}
@@ -31,7 +32,7 @@ function TimeUnitInput(
 }
 
 
-function TimeInput() {
+function TimeInput({ problemId }: { problemId: number }) {
 
   return (
 
@@ -41,6 +42,7 @@ function TimeInput() {
         Attempt Time
       </legend>
       <TimeUnitInput
+        problemId={problemId}
         name="hours"
         placeholder="h"
         nextElementId="minutes"
@@ -48,6 +50,7 @@ function TimeInput() {
       />
       <span className="text-4xl px-1">:</span>
       <TimeUnitInput
+        problemId={problemId}
         name="minutes"
         placeholder="m"
         nextElementId="seconds"
@@ -55,6 +58,7 @@ function TimeInput() {
       />
       <span className="text-4xl px-1">:</span>
       <TimeUnitInput
+        problemId={problemId}
         name="seconds"
         placeholder="s"
         prevElementId="minutes"
