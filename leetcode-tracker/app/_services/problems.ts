@@ -13,3 +13,20 @@ export async function getProblems() {
     }
     
 }
+
+
+export async function postAttempt(
+  problemId: number, attemptTime: number, rating: number
+) {
+  try {
+    await prisma.user_attempts.create({
+      data: {
+        problem_id: problemId,
+        attempt_time: attemptTime,
+        rating: rating
+      }
+    });
+  } catch (err) {
+    throw err;
+  }
+}

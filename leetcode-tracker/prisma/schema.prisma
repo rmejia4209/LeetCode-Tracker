@@ -16,6 +16,7 @@ model problems {
   goal_time  Int
   is_premium Boolean
   topics     topics         @relation(fields: [topic_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user_attempts user_attempts[]
   @@map("grind_169_problems")
 }
 
@@ -27,7 +28,10 @@ model topics {
 
 model user_attempts {
   id           Int @id @default(autoincrement())
+  problem_id  Int
   attempt_time Int
+  rating  Int
+  problems  problems @relation(fields: [problem_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
 }
 
 enum difficulty_val {
